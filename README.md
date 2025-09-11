@@ -1,2 +1,3 @@
 # LaboratorioProgrammazione1
-sapere che cosa è una gitignore
+
+ciao non so usare ancora bene github quindi ho messo la presentazione senza tenere conto delle altre impostazioni ciao 
