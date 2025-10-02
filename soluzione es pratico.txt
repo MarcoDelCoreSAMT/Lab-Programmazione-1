@@ -1,0 +1,3 @@
+sostituire "<=" con "<" 
+ref:
+	for (int i = 0; i <= voti.length; i++) {
