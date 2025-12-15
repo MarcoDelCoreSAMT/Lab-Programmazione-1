@@ -1,0 +1,64 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Card {
+- name : String
+- elixirCost : int
+- level : int
++ Card(name : String, elixirCost : int, level : int)
++ getName() : String
++ setName(name : String) : void
++ getElixirCost() : int
++ setElixirCost(elixirCost) : int
++ getLevel() : int
++ setLevel(level : int) : void
++ toString(): String
++ equals(Object) : boolean
+}
+
+class TroopCard{
+- int hitPoints;
+- int damage;
++ TroopCard(name : String, elixirCost : int, level : int, hitPoints : int, damage : int)
++ getHitPoints() : int
++ getDamage() : int
++ toString(): String
+}
+
+class SpellCard {
+- int areaDamage
+- double radius
++ SpellCard(name : String, elixirCost : int, level : int, areaDamage : int, radius : double)
++ getAreaDamage() : int
++ getRadius() : double
++ toString() : String
+}
+
+class Deck {
+- ArrayList<Card> cards
++ addCard(Card)
++ removeCard(Card)
++ getCards()
+}
+
+class Player {
+- nickname : String
+- deck : Deck
++ Player(nickname : String, deck : Deck)
++ getNickname() : String
++ getDeck() : Deck
+}
+
+class BattleEngine {
++ playCard(Card : card) : void
+}
+
+
+TroopCard  “1” o--“*” Card
+SpellCard  “1” o--“*” Card
+
+Deck "0" o-- "*" Card
+Player "1" *-- "1" Deck
+BattleEngine "1" -- "1" Card
+
+@enduml
