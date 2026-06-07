@@ -34,6 +34,10 @@ Intro --> Spin : utilizza
 Intro --> Fase : usa
 LevelDemo --> GameFase : usa
 
+'Frecce per rendere tutto più pulito e logico
+LevelDemo -[hidden]up-|> SkeletrixIsland
+Intro -[hidden]up-|> SkeletrixIsland
+
 interface Collect {
 getX():float
 getY():float
@@ -156,9 +160,6 @@ WAIT1
 WAIT2
 EXIT
 }
-
-LevelDemo -[hidden]up-|> SkeletrixIsland
-Intro -[hidden]up-|> SkeletrixIsland
 
 class LevelDemo {
 -{static}VIRTUAL_W:float
