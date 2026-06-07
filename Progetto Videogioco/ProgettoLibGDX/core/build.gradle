@@ -1,0 +1,35 @@
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
+
+dependencies {
+  api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+  api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "com.esotericsoftware.spine:spine-libgdx:$spineRuntimeVersion"
+  api "com.github.aliasifk:HackLights:$hackLightsVersion"
+  api "com.github.implicit-invocation:jbump:$jbumpVersion"
+  api "com.github.kotcrab.vis-ui:vis-ui:$visUiVersion"
+  api "com.github.tommyettinger:anim8-gdx:$anim8Version"
+  api "com.github.tommyettinger:colorful:$colorfulVersion"
+  api "com.github.tommyettinger:libgdx-utils:$utilsVersion"
+  api "com.github.tommyettinger:make_some_noise:$makeSomeNoiseVersion"
+  api "com.github.tommyettinger:regexodus:$regExodusVersion"
+  api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
+  api "com.sudoplay.joise:joise:$joiseVersion"
+  api "games.rednblack.miniaudio:miniaudio:$miniaudioVersion"
+  api "org.mini2Dx:universal-tween-engine:$universalTweenVersion"
+  api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+  }
+}
+
+jar {
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+test {
+  useJUnitPlatform()
+}

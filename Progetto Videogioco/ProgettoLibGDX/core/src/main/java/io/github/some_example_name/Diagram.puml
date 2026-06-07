@@ -1,0 +1,265 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class SkeletrixIsland
+
+class ScreenAdapter
+class LevelDemo
+class Intro
+
+class Spin
+class GestoreLivelli
+class SterlingRuby
+class Scatola
+interface Screen
+interface Collect
+interface Collidable
+interface Spinnable
+
+' Relazioni di ereditarietà
+LevelDemo --|> ScreenAdapter : extends
+Intro --|> ScreenAdapter : extends
+ScreenAdapter ..|> Screen : implements
+SterlingRuby ..|> Collect : implements
+Scatola ..|> Collidable : implements
+Spin ..|> Spinnable : implements
+
+' Relazioni di associazione/composizione
+LevelDemo --> SkeletrixIsland : riferito
+Intro --> SkeletrixIsland : riferito
+LevelDemo --> GestoreLivelli : utilizza
+GestoreLivelli --> SterlingRuby : gestisce
+GestoreLivelli --> Scatola : gestisce
+Intro --> Spin : utilizza
+Intro --> Fase : usa
+LevelDemo --> GameFase : usa
+
+interface Collect {
+getX():float
+getY():float
+isCollected():boolean
+collect():void
+}
+
+interface Collidable {
+getX():float
+getY():float
+getBounds():Rectangle
+}
+
+interface Spinnable {
+updateSpin(delta:float):void
+getAngle():float
+getSpinSpeed():float
+}
+
+class SkeletrixIsland {
+create():void
+}
+
+class SterlingRuby {
+-x:float
+-y:float
+-baseY:float
+
+' Secondo l'AI si scrive cosi
+-{static}WIDTH:float
+-{static}HEIGHT:float
++SterlingRuby(x:float,y:float)
+
+' Classi ovveridate
++getX():float
++getY():float
++isCollected():boolean
++collect():void
+
++update(skullT:float):void
+}
+
+class GestoreLivelli {
++{static}createSkulls():Array<SterlingRuby>
++{static}createCrates():Array<Scatola>
++{static}total():int
+}
+
+class Scatola {
+-x:float
+-y:float
+-w:float
+-h:float
++Scatola(textureScatole:Texture,x:float,y:float,w:float,h:float)
++getW():float
++getH():float
+
+' Classi ovveridate
++getX():float
++getY():float
++getBounds():Rectangle
+
++draw(batch:SpriteBatch,cameraX:float):void
+}
+
+class Spin {
+-angle:float
+-{static}SPIN_SPEED:float
+
+'Classi overridate
++updateSpin(delta:float):void
++getAngle():float
++getSpinSpeed():float
+
++update(delta:float):void
+}
+
+class Intro {
+-game:SkeletrixIsland
+-batch:SpriteBatch
+-home:Texture
+-logo:Texture
+-wait1:Texture
+-wait2:Texture
+-wait3:Texture
+-hubHead:Texture
+-title:BitmapFont
+-waitF:BitmapFont
+-com:BitmapFont
+-music:Music
+-waitM:Music
+-edlaugh:Sound
+-laughPlayed:boolean
+-fase1:boolean
+-fase2:boolean
+-waitMStarted:boolean
+-time:float
+-introDuration:float
+-fadeToHomeDuration:float
+-exitAlpha:float
+-exitDuration:float
+-tLoad:float
+-fase:Fase
+-blinkTimer:float
+-blinkVisible:boolean
+-hubAngle:float
+-hubFaceRegion:TextureRegion
+-hubSpin:Spin
+
+'Classi overridate
++Intro(game:SkeletrixIsland)
++show():void
++render(delta:void):void
+}
+
+enum Fase {
+INTRO
+HOME
+WAIT1
+WAIT2
+EXIT
+}
+
+LevelDemo -[hidden]up-|> SkeletrixIsland
+Intro -[hidden]up-|> SkeletrixIsland
+
+class LevelDemo {
+-{static}VIRTUAL_W:float
+-{static}VIRTUAL_H:float
+-{static}FRAME_COLS:int
+-{static}FRAME_ROWS:int
+-{static}FRAME_DURATION:float
+-{static}MOVE_SPEED:float
+-{static}HUB_W:float
+-{static}HUB_H:float
+
+-camera:OrthographicCamera
+-viewport:Viewport
+-batch:SpriteBatch
+
+-bgIm:Texture
+-bgIm2:Texture
+-nope:Texture
+-skullSR:Texture
+-uaif:Texture
+-jrPr:Texture
+-cr1:Texture
+-cr2:Texture
+-inHere:Texture
+-endImg:Texture
+-idleSheet:Texture
+-walkSheet:Texture
+-ubJump:Texture
+-skulls:Array<SterlingRuby>
+-scatole:Array<Scatola>
+
+-idleAnimation:Animation<TextureRegion>
+-walkAnimation:Animation<TextureRegion>
+-boundsHub:Rectangle
+-doorArea:Rectangle
+
+- float stateTime
+- float x, y
+- boolean isMoving
+- boolean wasMoving
+- boolean facingLeft
+- float groundY
+- float cameraX
+- float bgWidth
+- float skullT
+- float time
+
+-bgAmbient:Music
+-skM1:Music
+-step1:Sound
+-step2:Sound
+-umBreath:Sound
+-coin:Sound
+-landJ:Sound
+-jump:Sound
+-step1Id:long
+-step2Id:long
+-umBreathId:long
+
+-countSK:int
+-huvFont:BitmapFont
+-isJumping:boolean
+-timeEnd:float
+-game:SkeletrixIsland
+
+~vYhub:float
+~g:float
+~FORZA_SALTO:float
+
++LevelDemo(game:SkeletrixIsland)
++show():void
++render(delta:void):void
+-buildAnimation(sheet:Texture):nimation<TextureRegion>
+-handleCollision(obj:Collidable):void
+}
+
+enum GameFase {
+PLAYING
+FADING_OUT
+END_SCREEN
+}
+
+class ScreenAdapter{
+' Classi ovveridate
++render(delta:float):void
++resize(width:int,height:int):void
++show():void
++hide():void
++pause():void
++resume():void
++dispose():void
+}
+
+interface Screen{
++render(delta:float):void
++resize(width:int,height:int):void
++show():void
++hide():void
++pause():void
++resume():void
++dispose():void
+}
+
+@enduml
